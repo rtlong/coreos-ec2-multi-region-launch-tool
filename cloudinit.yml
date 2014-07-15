@@ -1,0 +1,21 @@
+#cloud-config
+
+coreos:
+  etcd:
+    # discovery: "https://discovery.etcd.io/b86ea3870b50ef49d195aebb744249f7"
+    # addr: "$public_ipv4:4001"
+    # peer-addr: "$public_ipv4:7001"
+    #
+    # Use longer timeouts for use over the high-latency public internet
+    peer-heartbeat-interval: 200
+    peer-election-timeout: 800
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+
+user_default: &USER_DEFAULT
+  no-user-group: true
+  groups:
+  - docker
